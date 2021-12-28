@@ -135,6 +135,7 @@ while (cap.isOpened()):
                         1)
             # src = cv.resize(frame, (w // 2, h // 2), interpolation=cv.INTER_CUBIC)  # 窗口大小
             cv.imshow("Zoom Out", frame)
+            cv.imshow('Target', src)
             # test print("FPS: ", c / (time.time() - start_time))
             c = 0
             start_time = time.time()
@@ -143,6 +144,7 @@ while (cap.isOpened()):
             res_old = gray
         diff = cv.subtract(gray, res_old)
         res = not np.any(diff)
+
         if res is False:
             cv.imshow('DIFFERENCE', diff)
             amount = cv.countNonZero(diff)
@@ -166,7 +168,7 @@ while (cap.isOpened()):
                 mask = cv.inRange(hsv, hsv_low, hsv_high)
                 res = cv.bitwise_and(diff, diff, mask=mask)
                 cv.imshow('Detect', res)
-                cv.imshow('Target', src)
+
                 if f <= 2:
                     res_old = res
                     mask_old = mask
