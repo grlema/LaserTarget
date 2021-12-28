@@ -222,6 +222,9 @@ print("\n   Press any key to show the impact points in sequence!!")
 cv.waitKey(0)
 cv.destroyAllWindows()
 
+fourcc = cv.VideoWriter.fourcc('m', 'p', '4', 'v')  # for mp4  (*'XVID')  # for avi
+out = cv.VideoWriter(str(args.input)+'.mp4', fourcc, 1, (w, h))
+
 for i in range(len(pos)):
     # print(pos[i])
     px, py = pos[i]
@@ -230,11 +233,13 @@ for i in range(len(pos)):
     cv.line(src1, (px, py - 4), (px, py + 4), (0, 0, 255), thickness=2)
     # cv.imshow('All', src1)
     a = cv.resize(src1, (w, h))
-    cv.putText(a, str(i + 1), (5, 10), cv.FONT_HERSHEY_PLAIN, 1, (0, 255, 0), 1)
+    cv.putText(a, str(str(i+1)+':'+str(px)+','+str(py)), (5, 230), cv.FONT_HERSHEY_PLAIN, 1, (0, 255, 0), 1)
     cv.imshow('All Targets', a)
+    out.write(a)
     cv.waitKey(2000)
 
 print("   press any key to stop!!")
 cv.waitKey(0)
 cap.release()
+out.release()
 cv.destroyAllWindows()
